@@ -207,29 +207,31 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
+    let count = 0;
     let str = '';
-    for (let i = 0; i <= (width * height) + (height - 2); i++) {
-        let currentHeight = Math.ceil((i)  / width);//  !!!!!!
-        if (currentHeight === 1 || currentHeight === 0) {
-            if (i === 0) str += '┌';
-            if (i === width - 1) str += '┐\n';
-            if (i !== 0 && i !== width - 1) str += '─';
+    while (count < height) {
+        if (count === 0) {
+            for (let i = 0; i < width; i++) {
+                if (i === 0) {str += '┌'}
+                else if (i === width - 1) {str += '┐\n'}
+                else {str += '─'}
+            }
         }
-
-        if (currentHeight === height) {
-            let indexLeftBottom = (i - currentHeight + 1) / width);
-            let indexRightBottom = (width * height) + (height - 2);
-            if (indexLeftBottom === currentHeight - 1) str += '└';
-            if (i === indexRightBottom) str += '┘\n';
-            if (i !== indexRightBottom) str += '─'
+        else if (count === height - 1) {
+            for (let i = 0; i < width; i++) {
+                if (i === 0) {str += '└'}
+                else if (i === width - 1) {str += '┘\n'}
+                else {str += '─'}
+            }
         }
-        if (currentHeight > 1 && currentHeight !== height) {
-            let indexmiddleLeft = (i - currentHeight + 1) / width);
-            let indexmiddleRight = (i - currentHeight + width + 1);
-            if (indexmiddleLeft === currentHeight - 1) str += '|';
-            if (indexmiddleRight / width) === width;) str += '|\n'
-            if (indexmiddleLeft !== currentHeight - 1) str += ' ';
+        else {
+            for (let i = 0; i < width; i++) {
+                if (i === 0) {str += '│'}
+                else if (i === width - 1) {str += '│\n'}
+                else {str += ' '}
+            }
         }
+        count++;
     }
     return str;
 }
@@ -251,7 +253,17 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    throw new Error('Not implemented');
+    let alphabet = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!?.';
+    let rot = ' NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm!?.';
+    let result = '';
+    for (let i = 0; i < str.length; i++) {
+        for (let j = 0; j < alphabet.length; j++) {
+            if (str[i] === alphabet[j]) {
+                result += rot[j];
+            }
+        }
+    }
+    return result;
 }
 
 /**
@@ -268,7 +280,7 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    throw new Error('Not implemented');
+    if (value === 'undefined' || value === 'null' || Array.isArray(value))
 }
 
 
@@ -297,7 +309,10 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-    throw new Error('Not implemented');
+    let arr = ['A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣','A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦','A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥','A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠'];
+    for (let i = 0; i < arr.length; i++) {
+        if (value === arr[i]) return i;
+    }
 }
 
 
