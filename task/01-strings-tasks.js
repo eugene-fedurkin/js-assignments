@@ -136,7 +136,21 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-    str.search(/\value/);
+    let n = value.length;
+    let N = str.length - n + 1;
+    for (let i = 0; i < N; i++) {  
+        let j = 0;
+        while (j < n && value[j] === str[i+j]) j++;
+        if (j === n) {
+            if (str[i-1] === ' ' && str[i+j] === ' ') {
+                str = str.substr(0,i) +  str.substr(i + j + 1);
+                return str;
+            }
+            str = str.substr(0,i) + str.substr(i + j);
+            return str;
+        }
+    }
+    return -1;
 }
 
 /**
@@ -280,7 +294,7 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    if (value === 'undefined' || value === 'null' || Array.isArray(value))
+    return typeof value === 'string' || value instanceof String;
 }
 
 
